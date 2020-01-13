@@ -2,11 +2,19 @@ import pygame
 import tkinter
 from tkinter import messagebox
 import random
+import os
 
+x = 400
+y = 150
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x, y)
 WIDTH = 600
 length = 0
 screen = pygame.display.set_mode((WIDTH, WIDTH))
 is_running = True
+image_up = pygame.image.load(r'Images/HeadUp.png')
+image_left = pygame.image.load(r'Images/HeadLeft.png')
+image_right = pygame.image.load(r'Images/HeadRight.png')
+image_down = pygame.image.load(r'Images/HeadDown.png')
 
 
 class Cube:
@@ -28,11 +36,14 @@ class Cube:
         j = self.pos[1]
         if self.color == 'green':
             if self.head:
-                pygame.draw.rect(screen, (0, 220, 0), (i, j, 30, 30))
+                if (self.dirnx, self.dirny) == (1, 0): screen.blit(image_right, (i, j))
+                elif (self.dirnx, self.dirny) == (-1, 0): screen.blit(image_left, (i, j))
+                elif (self.dirnx, self.dirny) == (0, 1): screen.blit(image_down, (i, j))
+                elif (self.dirnx, self.dirny) == (0, -1): screen.blit(image_up, (i, j))
             else:
-                pygame.draw.rect(screen, (0, 0, 220), (i, j, 30, 30))
+                pygame.draw.rect(screen, (0, 220, 0), (i + 1, j + 1, 29, 29))
         else:
-            pygame.draw.rect(screen, (255, 0, 0), (i, j, 30, 30))
+            pygame.draw.rect(screen, (255, 0, 0), (i + 1, j + 1, 29, 29))
 
 
 class Snake:
@@ -89,8 +100,8 @@ class Snake:
                     cube.move(cube.dirnx, cube.dirny)
 
     def draw(self):
-        for cube in self.body:
-            cube.draw()
+        for index, cube in enumerate(self.body):
+                cube.draw()
 
     def add_cube(self):
         last = self.body[-1]
@@ -149,6 +160,6 @@ def main():
 
 main()
 
-root = tkinter.Tk()
-root.withdraw()
-messagebox.showinfo('Game Over!', 'Your length was: {0}'.format(length))
+# root = tkinter.Tk()
+# root.withdraw()
+# messagebox.showinfo('Game Over!', 'Your length was: {0}'.format(length))
