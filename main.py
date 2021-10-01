@@ -130,12 +130,14 @@ class Snake:
 
 def random_pos(snake):
     f_list = []
-    for i in range(0, 600, 30):
+    for i in range(0, WIDTH, WIDTH // 20):
         f_list.append(i)
     f_random = random.choice(f_list)
     s_random = random.choice(f_list)
-    if (f_random, s_random) in snake.body:
-        random_pos(snake)
+    for body_part in snake.body:
+        if body_part.pos[0] == s_random and body_part.pos[1] == s_random:
+            random_pos(snake)
+            break
     return f_random, s_random
 
 
