@@ -11,10 +11,10 @@ WIDTH = 600
 length = 0
 screen = pygame.display.set_mode((WIDTH, WIDTH))
 is_running = True
-image_up = pygame.image.load(r'Images/HeadUp.png')
-image_left = pygame.image.load(r'Images/HeadLeft.png')
-image_right = pygame.image.load(r'Images/HeadRight.png')
-image_down = pygame.image.load(r'Images/HeadDown.png')
+image_up = pygame.image.load(r'img/HeadUp.png')
+image_left = pygame.image.load(r'img/HeadLeft.png')
+image_right = pygame.image.load(r'img/HeadRight.png')
+image_down = pygame.image.load(r'img/HeadDown.png')
 
 
 class Cube:
@@ -29,17 +29,22 @@ class Cube:
     def move(self, dirnx, dirny):
         self.dirnx = dirnx
         self.dirny = dirny
-        self.pos = (self.pos[0] + 30 * self.dirnx, self.pos[1] + 30 * self.dirny)
+        self.pos = (self.pos[0] + 30 * self.dirnx,
+                    self.pos[1] + 30 * self.dirny)
 
     def draw(self):
         i = self.pos[0]
         j = self.pos[1]
         if self.color == 'green':
             if self.head:
-                if (self.dirnx, self.dirny) == (1, 0): screen.blit(image_right, (i, j))
-                elif (self.dirnx, self.dirny) == (-1, 0): screen.blit(image_left, (i, j))
-                elif (self.dirnx, self.dirny) == (0, 1): screen.blit(image_down, (i, j))
-                elif (self.dirnx, self.dirny) == (0, -1): screen.blit(image_up, (i, j))
+                if (self.dirnx, self.dirny) == (1, 0):
+                    screen.blit(image_right, (i, j))
+                elif (self.dirnx, self.dirny) == (-1, 0):
+                    screen.blit(image_left, (i, j))
+                elif (self.dirnx, self.dirny) == (0, 1):
+                    screen.blit(image_down, (i, j))
+                elif (self.dirnx, self.dirny) == (0, -1):
+                    screen.blit(image_up, (i, j))
             else:
                 pygame.draw.rect(screen, (0, 220, 0), (i + 1, j + 1, 29, 29))
         else:
@@ -92,23 +97,31 @@ class Snake:
                 if index == len(self.body) - 1:
                     self.turns.pop(p)
             else:
-                if cube.pos[0] <= 0 and (cube.dirnx, cube.dirny) == (-1, 0): is_running = False
-                elif cube.pos[0] >= 570 and (cube.dirnx, cube.dirny) == (1, 0): is_running = False
-                elif cube.pos[1] <= 0 and (cube.dirnx, cube.dirny) == (0, -1): is_running = False
-                elif cube.pos[1] >= 570 and (cube.dirnx, cube.dirny) == (0, 1): is_running = False
+                if cube.pos[0] <= 0 and (cube.dirnx, cube.dirny) == (-1, 0):
+                    is_running = False
+                elif cube.pos[0] >= 570 and (cube.dirnx, cube.dirny) == (1, 0):
+                    is_running = False
+                elif cube.pos[1] <= 0 and (cube.dirnx, cube.dirny) == (0, -1):
+                    is_running = False
+                elif cube.pos[1] >= 570 and (cube.dirnx, cube.dirny) == (0, 1):
+                    is_running = False
                 else:
                     cube.move(cube.dirnx, cube.dirny)
 
     def draw(self):
         for index, cube in enumerate(self.body):
-                cube.draw()
+            cube.draw()
 
     def add_cube(self):
         last = self.body[-1]
-        if last.dirnx == 1 and last.dirny == 0: tail = Cube(pos=(last.pos[0] - 30, last.pos[1]))
-        elif last.dirnx == -1 and last.dirny == 0: tail = Cube(pos=(last.pos[0] + 30, last.pos[1]))
-        elif last.dirnx == 0 and last.dirny == 1: tail = Cube(pos=(last.pos[0], last.pos[1] - 30))
-        elif last.dirnx == 0 and last.dirny == -1: tail = Cube(pos=(last.pos[0], last.pos[1] + 30))
+        if last.dirnx == 1 and last.dirny == 0:
+            tail = Cube(pos=(last.pos[0] - 30, last.pos[1]))
+        elif last.dirnx == -1 and last.dirny == 0:
+            tail = Cube(pos=(last.pos[0] + 30, last.pos[1]))
+        elif last.dirnx == 0 and last.dirny == 1:
+            tail = Cube(pos=(last.pos[0], last.pos[1] - 30))
+        elif last.dirnx == 0 and last.dirny == -1:
+            tail = Cube(pos=(last.pos[0], last.pos[1] + 30))
 
         tail.dirnx = last.dirnx
         tail.dirny = last.dirny
@@ -160,6 +173,6 @@ def main():
 
 main()
 
-# root = tkinter.Tk()
-# root.withdraw()
-# messagebox.showinfo('Game Over!', 'Your length was: {0}'.format(length))
+root = tkinter.Tk()
+root.withdraw()
+messagebox.showinfo('Game Over!', 'Your length was: {0}'.format(length))
