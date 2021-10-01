@@ -5,6 +5,9 @@
 ## Description
 Creating a simple snake game to enhance my knowledge of [pygame](https://www.pygame.org/) and [tkinter](https://docs.python.org/3/library/tkinter.html).
 
+## Game Preview
+<img src="https://github.com/svdimitrov/Tic-Tac-Toe/blob/master/img/Game%20preview.png" width=300 height=360>
+
 ## Usage
 First, download the project:
 ```
